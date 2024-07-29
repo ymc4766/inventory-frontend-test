@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@layer components {
+  .btn {
+    @apply rounded-full flex items-center justify-center active:bg-dark_hover_1;
+  }
+  .btn_secondary {
+    @apply w-[45px] h-[45px] rounded-full flex items-center justify-center bg-dark_bg_2;
+  }
+  .p16 {
+    @apply px-[16px];
+  }
+  .textPrimary {
+    font-size: 16px;
+    line-height: 21px;
+    @apply text-dark_text_1;
+  }
+  .textSecondary {
+    font-size: 14px;
+    line-height: 19px;
+    @apply text-dark_text_2;
+  }
+  .input {
+    @apply w-full dark:bg-dark_bg_2 p-1.5 dark:text-dark_text_1 rounded-lg flex-1 outline-none;
+  }
+  .rotateAnimation {
+    animation: rotate 0.3s forwards;
+  }
+  .overflow_scrollbar {
+    height: calc(100vh - 155px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
