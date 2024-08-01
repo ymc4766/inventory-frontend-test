@@ -4,19 +4,22 @@ import { BsFillGrid3X3GapFill, BsGrid1X2Fill } from "react-icons/bs";
 import { IoIosArrowUp, IoIosClose } from "react-icons/io";
 import { FaToolbox } from "react-icons/fa";
 
-const Sidebar = () => {
+const Sidebar = ({ openSidebarToggle, openSidebar }) => {
   const [isInventoryOpen, setIsInventoryOpen] = useState(true);
 
   const toggleInventory = () => {
     setIsInventoryOpen(!isInventoryOpen);
   };
   return (
-    <aside id="sidebar" className="">
+    <aside
+      id="sidebar"
+      className={openSidebarToggle ? "sidebar-responsive p-4" : ""}
+    >
       <div className="sidebar-title">
         <div className="sidebar-brand  flex items-center space-x-2 text-slate-300 ">
           <BiTime size={26} className="icon_head mr-2" /> 2:15
         </div>
-        <span className="icon close_icon ">
+        <span className="icon close_icon " onClick={openSidebar}>
           <IoIosClose size={32} className="text-slate-100 ml-4" />
         </span>
       </div>
