@@ -1,11 +1,38 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { BsEmojiLaughing } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useLoginMutation } from "../../redux/userApiSlice";
+import { userCredentials } from "../../redux/authSlice";
+import { toast } from "react-toastify";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const [login, { isLoading, error }] = useLoginMutation();
+
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+
+  const redirect = sp.get("/redirect") || "/dashboard";
+
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
+    try {
+      e.preventDefault();
+      const res = await login({ email, password }).unwrap();
+
+      dispatch(userCredentials({ ...res }));
+      toast.success("login Succesfully");
+      navigate(redirect);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
 
   return (
     <motion.div
@@ -17,7 +44,10 @@ const LoginScreen = () => {
     >
       {/* Sign in Form Goes Here */}
 
-      <form className="max-w-md mx-auto bg-white p-8  rounded shadow-lg">
+      <form
+        className="max-w-md mx-auto bg-white p-8  rounded shadow-lg"
+        onSubmit={submitHandler}
+      >
         <h1 className="text-center text-2xl font-bold">Sign In </h1>
 
         <div className="mb-4">
@@ -43,6 +73,7 @@ const LoginScreen = () => {
             password
           </label>
           <input
+            type="password"
             placeholder="Enter your password "
             value={password}
             onChange={(e) => setPassword(e.target.value)}
