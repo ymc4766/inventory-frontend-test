@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { BsEmojiLaughing } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../../redux/userApiSlice";
 import { userCredentials } from "../../redux/authSlice";
 import { toast } from "react-toastify";
@@ -13,6 +13,7 @@ const LoginScreen = () => {
 
   const dispatch = useDispatch();
   const [login, { isLoading, error }] = useLoginMutation();
+  const { userInfo } = useSelector((state) => state.auth);
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
@@ -20,6 +21,12 @@ const LoginScreen = () => {
   const redirect = sp.get("/redirect") || "/dashboard";
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   const submitHandler = async (e) => {
     try {

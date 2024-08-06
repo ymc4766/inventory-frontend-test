@@ -6,6 +6,7 @@ import Dashboard from "./screens/Dashboard";
 import LoginScreen from "./screens/userScreens/LoginScreen";
 import RegisterScreen from "./screens/userScreens/RegisterScreen";
 import Warehouse from "./screens/productScreens/Warehouse";
+import ProductDetails from "./screens/productScreens/ProductDetails";
 
 function App() {
   return (
@@ -32,6 +33,16 @@ function App() {
           element={
             <Layout>
               <Warehouse />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/product/:id"
+          exact
+          element={
+            <Layout>
+              <ProductDetails />
             </Layout>
           }
         />

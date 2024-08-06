@@ -54,9 +54,9 @@ const Warehouse = () => {
                     </td>
                     <td className="py-2 px-4 border">{product.stock}</td>
                     <td className="py-2 px-4 border">{product.supplier}</td>
-                    <Link to={`/asset/${product._id}`}>
+                    <Link to={`/product/${product._id}`}>
                       <td className="py-2 px-4 border">View</td>
-                    </Link>{" "}
+                    </Link>
                   </tr>
                 ))}
             </tbody>
