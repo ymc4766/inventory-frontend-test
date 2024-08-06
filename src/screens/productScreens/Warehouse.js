@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../redux/productSlice";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getProducts } from "../../redux/productSlice";
 
-const Dashboard = () => {
+const Warehouse = () => {
   const { products, isSuccess, isLoading, isError, message } = useSelector(
     (state) => state.products
   );
@@ -53,6 +54,9 @@ const Dashboard = () => {
                     </td>
                     <td className="py-2 px-4 border">{product.stock}</td>
                     <td className="py-2 px-4 border">{product.supplier}</td>
+                    <Link to={`/asset/${product._id}`}>
+                      <td className="py-2 px-4 border">View</td>
+                    </Link>{" "}
                   </tr>
                 ))}
             </tbody>
@@ -66,4 +70,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Warehouse;

@@ -5,6 +5,7 @@ import Layout from "./Layout/Layout";
 import Dashboard from "./screens/Dashboard";
 import LoginScreen from "./screens/userScreens/LoginScreen";
 import RegisterScreen from "./screens/userScreens/RegisterScreen";
+import Warehouse from "./screens/productScreens/Warehouse";
 
 function App() {
   return (
@@ -22,6 +23,15 @@ function App() {
           element={
             <Layout>
               <Dashboard />
+            </Layout>
+          }
+        />
+        <Route
+          path="/warehouse"
+          exact
+          element={
+            <Layout>
+              <Warehouse />
             </Layout>
           }
         />

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PRODUCTS_URL } from "./constants";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getProductService } from "../reduxServices/productServices";
 
 const initialState = {
   products: [],
@@ -31,6 +32,25 @@ export const getProducts = createAsyncThunk(
   }
 );
 
+// get single product detail
+export const getProduct = createAsyncThunk(
+  "product/detail",
+  async (id, thunkAPI) => {
+    try {
+      return await getProductService(id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const productSlice = createSlice({
   name: "products",
   initialState,
@@ -45,10 +65,27 @@ const productSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.products = action.payload;
-        toast.success("products render Successfuly");
       })
-      .addCase(getProducts.pending, (state) => {
+      .addCase(getProducts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(action.payload);
+      })
+      .addCase(getProduct.pending, (state) => {
         state.isLoading = true;
+      })
+      .addCase(getProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.product = action.payload;
+      })
+      .addCase(getProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(action.payload);
       });
   },
 });
