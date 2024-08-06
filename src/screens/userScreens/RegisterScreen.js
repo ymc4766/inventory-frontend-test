@@ -1,16 +1,45 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { BsEmojiLaughing } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { userCredentials } from "../../redux/authSlice";
+import { useDispatch } from "react-redux";
+import { useRegisterMutation } from "../../redux/userApiSlice";
+import { toast } from "react-toastify";
+import Loader from "../../components/Loader";
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log("name", name);
+  const [name, setName] = useState("");
+  const dispatch = useDispatch();
+  const [register, { isLoading, error }] = useRegisterMutation();
+
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+
+  const redirect = sp.get("/redirect") || "/dashboard";
+
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
+    try {
+      e.preventDefault();
+      if (password !== confirmPassword) {
+        toast.error("password don't match");
+        return;
+      } else {
+        const res = await register({ name, email, password }).unwrap();
+
+        dispatch(userCredentials({ ...res }));
+        toast.success("user created Succesfully");
+        navigate(redirect);
+      }
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
 
   return (
@@ -67,9 +96,26 @@ const RegisterScreen = () => {
             password
           </label>
           <input
+            type="password"
             placeholder="Enter your password "
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="border-2 border-gray-300 p-2 w-full rounded-md"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="email"
+            className="block text-gray-500 text-sm font-bold"
+          >
+            password
+          </label>
+          <input
+            type="password"
+            placeholder="Confirm  password "
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="border-2 border-gray-300 p-2 w-full rounded-md"
           />
         </div>
@@ -79,7 +125,7 @@ const RegisterScreen = () => {
           className="bg-blue-800 p-2 px-4 text-slate-50 rounded-xl cursor-pointer
            hover:bg-slate-400 hover:text-slate-950  "
         >
-          Sign in
+          {isLoading ? <Loader /> : "Register"}
         </button>
 
         <div className="py-2 text-lg font-bold text-gray-4 00 cursor-pointer">
