@@ -7,6 +7,8 @@ import LoginScreen from "./screens/userScreens/LoginScreen";
 import RegisterScreen from "./screens/userScreens/RegisterScreen";
 import Warehouse from "./screens/productScreens/Warehouse";
 import ProductDetails from "./screens/productScreens/ProductDetails";
+import CartScreen from "./screens/CartScreen";
+import AuthUser from "./components/AuthUser";
 
 function App() {
   return (
@@ -22,18 +24,22 @@ function App() {
           path="/dashboard"
           exact
           element={
-            <Layout>
-              <Dashboard />
-            </Layout>
+            <AuthUser>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </AuthUser>
           }
         />
         <Route
           path="/warehouse"
           exact
           element={
-            <Layout>
-              <Warehouse />
-            </Layout>
+            <AuthUser>
+              <Layout>
+                <Warehouse />
+              </Layout>
+            </AuthUser>
           }
         />
 
@@ -41,9 +47,23 @@ function App() {
           path="/product/:id"
           exact
           element={
-            <Layout>
-              <ProductDetails />
-            </Layout>
+            <AuthUser>
+              <Layout>
+                <ProductDetails />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/store-requisition"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <CartScreen />
+              </Layout>
+            </AuthUser>
           }
         />
       </Routes>

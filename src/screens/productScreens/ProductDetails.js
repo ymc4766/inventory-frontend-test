@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Select } from "antd";
 import { BiCart } from "react-icons/bi";
 import { getProduct } from "../../redux/productSlice";
+import { addToCart } from "../../redux/cartSlice";
 
 const { Option } = Select;
 
@@ -34,6 +35,11 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(getProduct(productId));
   }, [dispatch]);
+
+  const addRequisitionHandler = () => {
+    dispatch(addToCart({ ...product, qty }));
+    navigate("/store-requisition");
+  };
 
   if (isLoading) {
     return (
@@ -129,7 +135,7 @@ const ProductDetails = () => {
         <button
           className="flex justify-center items-center gap-2 w-full py-3 px-4 bg-red-500 text-white text-md font-bold border border-red-500 rounded-md ease-in-out duration-150 shadow-slate-600 hover:bg-white hover:text-red-500 lg:m-0 md:px-6"
           title="Confirm Order"
-          //   onClick={addRequisitionHandler}
+          onClick={addRequisitionHandler}
           disabled={product?.stock === 0}
         >
           <span>Add Requisition</span>
