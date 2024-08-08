@@ -10,6 +10,7 @@ import ProductDetails from "./screens/productScreens/ProductDetails";
 import CartScreen from "./screens/CartScreen";
 import AuthUser from "./components/AuthUser";
 import RequisitionType from "./screens/productScreens/RequisitionType";
+import PurchaseRequisition from "./screens/productScreens/PurchaseRequisition";
 
 function App() {
   return (
@@ -75,6 +76,18 @@ function App() {
             <AuthUser>
               <Layout>
                 <RequisitionType />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/purchase-requisition"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <PurchaseRequisition />
               </Layout>
             </AuthUser>
           }

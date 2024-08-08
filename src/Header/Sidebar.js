@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { BiTime } from "react-icons/bi";
-import { BsFillGrid3X3GapFill, BsGrid1X2Fill } from "react-icons/bs";
+import { BiSolidUserPin, BiTime } from "react-icons/bi";
+import { BsCart4, BsFillGrid3X3GapFill, BsGrid1X2Fill } from "react-icons/bs";
 import { IoIosArrowUp, IoIosClose } from "react-icons/io";
 import { FaToolbox } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sidebar = ({ openSidebarToggle, openSidebar }) => {
   const [isInventoryOpen, setIsInventoryOpen] = useState(true);
+  const { cartItems } = useSelector((state) => state.cart);
+  const totalQty = cartItems?.reduce((acc, item) => acc + Number(item.qty), 0);
 
   const toggleInventory = () => {
     setIsInventoryOpen(!isInventoryOpen);
@@ -49,12 +53,32 @@ const Sidebar = ({ openSidebarToggle, openSidebar }) => {
           {isInventoryOpen && (
             <ul className="nested-list ml-8 space-y-3 mt-2">
               <li>
-                <a
-                  href="/warehouse"
+                <Link
+                  to="/warehouse"
                   className="flex items-center text-gray-300 hover:text-black hover:underline"
                 >
                   <FaToolbox className="icon" /> Warehouse
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/store-requisition"
+                  className="flex items-center text-gray-300 hover:text-black hover:underline"
+                >
+                  <BsCart4 className="icon" /> CART
+                  <span className="badge text-orange-700 mt-[-20px]">
+                    {totalQty}
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/my-orders-list"
+                  className="flex items-center
+                   text-gray-300 hover:text-black hover:underline"
+                >
+                  <BiSolidUserPin className="icon" /> MY REQUISITIONs
+                </Link>
               </li>
             </ul>
           )}

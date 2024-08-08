@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Landing = () => {
   const bgImage =
@@ -25,7 +25,7 @@ const Landing = () => {
           </h1>
 
           <button className="px-5 p-2 bg-orange-300 text-slate-700 hover:bg-orange-600 hover:text-slate-200 rounded-lg">
-            <a href="/login">Login</a>
+            <Link to="/login">Login</Link>
           </button>
         </div>
       </header>
