@@ -9,6 +9,7 @@ import Warehouse from "./screens/productScreens/Warehouse";
 import ProductDetails from "./screens/productScreens/ProductDetails";
 import CartScreen from "./screens/CartScreen";
 import AuthUser from "./components/AuthUser";
+import RequisitionType from "./screens/productScreens/RequisitionType";
 
 function App() {
   return (
@@ -62,6 +63,18 @@ function App() {
             <AuthUser>
               <Layout>
                 <CartScreen />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/requisition-type"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <RequisitionType />
               </Layout>
             </AuthUser>
           }
