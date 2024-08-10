@@ -15,6 +15,7 @@ import PlaceOrder from "./screens/productScreens/PlaceOrder";
 import MyOrders from "./screens/userScreens/MyOrders";
 import OrderDetails from "./screens/productScreens/OrderDetails";
 import ConfirmRequisition from "./screens/productScreens/ConfirmRequisition";
+import LPO from "./screens/productScreens/LPO";
 
 function App() {
   return (
@@ -138,6 +139,18 @@ function App() {
             <AuthUser>
               <Layout>
                 <OrderDetails />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/LPO-factory"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <LPO />
               </Layout>
             </AuthUser>
           }
