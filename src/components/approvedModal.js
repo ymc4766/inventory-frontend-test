@@ -2,93 +2,82 @@ import { Modal } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { saveApproveData } from "../redux/cartSlice";
+import { saveApprovedData } from "../redux/cartSlice";
 
-const ApprovedModal = ({ showApprovedModal, setShowApprovedModal }) => {
-  const cart = useSelector((state) => state.cart);
+const ApprovedModal = ({ showApprovedModal, setShowApprovedMadal }) => {
+  const { approvedData } = useSelector((state) => state.cart);
 
-  const { shippingAddress } = cart;
-
-  const [comment, setComment] = useState(shippingAddress?.comment);
-  const [reqBy, setReqBy] = useState(shippingAddress?.reqBy);
-  const [approved, setApproved] = useState(shippingAddress?.approved);
-  const navigate = useNavigate();
+  const [reqBy, setReqBy] = useState(approvedData?.reqBy);
+  const [approvedBy, setApprovedBy] = useState(approvedData?.approvedBy);
+  const [comment, SetComment] = useState(approvedData?.comment);
 
   const dispatch = useDispatch();
-  const handleSubmit = async (e) => {
+  const navigate = useNavigate();
+  const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveApproveData({ comment, reqBy, approved }));
-
-    setShowApprovedModal(false);
+    dispatch(saveApprovedData({ reqBy, approvedBy, comment }));
     navigate("/placeorder");
   };
+
   return (
     <Modal
-      type="add"
+      okType="add"
       open={showApprovedModal}
-      onCancel={() => {
-        setShowApprovedModal(false);
-      }}
       footer={false}
+      onCancel={() => {
+        setShowApprovedMadal(false);
+      }}
     >
-      <form layout="vertical" onSubmit={handleSubmit}>
-        <div class="mb-6">
-          <label
-            for="name"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
+      <div>
+        <h1>Approved Modal</h1>
+      </div>
+      <form onSubmit={submitHandler}>
+        <div className="mb-3 mt-2">
+          <label className="block text-sm font-medium text-gray-900 ">
             Requested By
           </label>
           <input
-            autoComplete="off"
-            type="text"
             name="name"
-            value={reqBy}
+            type="text"
             onChange={(e) => setReqBy(e.target.value)}
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            value={reqBy}
+            className="inputForm"
             placeholder="Requested By"
           />
         </div>
-        <div class="mb-6">
-          <label
-            for="name"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
+        <div className="mb-3 mt-2">
+          <label className="block text-sm font-medium text-gray-900 ">
             Approved By
           </label>
           <input
-            autoComplete="off"
+            name="approvedBy"
             type="text"
-            name="name"
-            value={approved}
-            onChange={(e) => setApproved(e.target.value)}
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Approved By "
+            onChange={(e) => setApprovedBy(e.target.value)}
+            value={approvedBy}
+            className="inputForm"
+            placeholder="Approved By"
           />
-        </div>
-        <div class="mb-6">
-          <label
-            for="name"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Remarks
+        </div>{" "}
+        <div className="mb-3 mt-2">
+          <label className="block text-sm font-medium text-gray-900 ">
+            Leave Comment
           </label>
-          <textarea
+          <input
+            name="comment"
             type="text"
-            name="name"
+            onChange={(e) => SetComment(e.target.value)}
             value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Add Some Remarks "
+            className="inputForm"
+            placeholder="Add Some Comment "
           />
         </div>
-
-        <div className="mt-4 flex justify-end mr-6">
-          <div className="">
-            <button className="btn btn-primary mt-4 px-6 bg-orange-400 text-gray-900 p-2 rounded-xl">
-              CONTINUE
-            </button>
-          </div>
+        <div className="mt-4 flex justify-end mr-5">
+          <button
+            type="submit"
+            className="px-3 p-2 bg-orange-500 rounded-2xl text-slate-50"
+          >
+            Continue
+          </button>
         </div>
       </form>
     </Modal>

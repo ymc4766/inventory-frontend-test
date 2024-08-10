@@ -11,6 +11,7 @@ import CartScreen from "./screens/CartScreen";
 import AuthUser from "./components/AuthUser";
 import RequisitionType from "./screens/productScreens/RequisitionType";
 import PurchaseRequisition from "./screens/productScreens/PurchaseRequisition";
+import PlaceOrder from "./screens/productScreens/PlaceOrder";
 
 function App() {
   return (
@@ -88,6 +89,18 @@ function App() {
             <AuthUser>
               <Layout>
                 <PurchaseRequisition />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/placeorder"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <PlaceOrder />
               </Layout>
             </AuthUser>
           }

@@ -5,7 +5,7 @@ const initialState = localStorage.getItem("cart")
   : {
       cartItems: [],
       requisitionSteps: {},
-      approveData: {},
+      approvedData: {},
     };
 
 const cartSlice = createSlice({
@@ -34,13 +34,13 @@ const cartSlice = createSlice({
       state.requisitionSteps = action.payload;
       localStorage.setItem("cart", JSON.stringify(state));
     },
-    saveApproveData: (state, action) => {
-      state.approveData = action.payload;
+    saveApprovedData: (state, action) => {
+      state.approvedData = action.payload;
       localStorage.setItem("cart", JSON.stringify(state));
     },
     clearCartItems: (state, action) => {
       state.cartItems = [];
-      state.shippingAddress = {};
+      state.approvedData = {};
       state.requisitionSteps = {};
       localStorage.setItem("cart", JSON.stringify(state));
     },
@@ -51,7 +51,8 @@ export const {
   addToCart,
   removeFromCart,
   saveRequisitionMethod,
-  saveApproveData,
+  saveApprovedData,
+  clearCartItems,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -1,4 +1,4 @@
-import { apiSlice } from "./apiSlice";
+import apiSlice from "./apiSlice";
 import { ORDERS_URL } from "./constants";
 
 const orderApiSlice = apiSlice.injectEndpoints({
