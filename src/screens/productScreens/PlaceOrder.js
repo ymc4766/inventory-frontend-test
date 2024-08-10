@@ -49,7 +49,6 @@ const PlaceOrder = () => {
       const { res } = await createOrder(orderData).unwrap();
       console.log("res", res);
       dispatch(clearCartItems());
-      navigate("/order-success");
     } catch (err) {
       console.error("Failed to place order: ", err);
     }
