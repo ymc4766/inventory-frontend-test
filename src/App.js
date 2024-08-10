@@ -16,6 +16,7 @@ import MyOrders from "./screens/userScreens/MyOrders";
 import OrderDetails from "./screens/productScreens/OrderDetails";
 import ConfirmRequisition from "./screens/productScreens/ConfirmRequisition";
 import LPO from "./screens/productScreens/LPO";
+import GRN from "./screens/productScreens/GRN";
 
 function App() {
   return (
@@ -151,6 +152,17 @@ function App() {
             <AuthUser>
               <Layout>
                 <LPO />
+              </Layout>
+            </AuthUser>
+          }
+        />
+        <Route
+          path="/goods-receive-note"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <GRN />
               </Layout>
             </AuthUser>
           }
