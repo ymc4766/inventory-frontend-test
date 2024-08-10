@@ -13,10 +13,7 @@ const Warehouse = () => {
 
   useEffect(() => {
     dispatch(getProducts());
-    if (isSuccess) {
-      toast.success("products render Successfuly");
-    }
-  }, [isSuccess]);
+  }, []);
 
   return (
     <div className="product-list w-full mt-10 px-4">

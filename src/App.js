@@ -12,6 +12,9 @@ import AuthUser from "./components/AuthUser";
 import RequisitionType from "./screens/productScreens/RequisitionType";
 import PurchaseRequisition from "./screens/productScreens/PurchaseRequisition";
 import PlaceOrder from "./screens/productScreens/PlaceOrder";
+import MyOrders from "./screens/userScreens/MyOrders";
+import OrderDetails from "./screens/productScreens/OrderDetails";
+import ConfirmRequisition from "./screens/productScreens/ConfirmRequisition";
 
 function App() {
   return (
@@ -93,6 +96,17 @@ function App() {
             </AuthUser>
           }
         />
+        <Route
+          path="/confirm-requisition"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <ConfirmRequisition />
+              </Layout>
+            </AuthUser>
+          }
+        />
 
         <Route
           path="/placeorder"
@@ -101,6 +115,29 @@ function App() {
             <AuthUser>
               <Layout>
                 <PlaceOrder />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/my-orders-list"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <MyOrders />
+              </Layout>
+            </AuthUser>
+          }
+        />
+        <Route
+          path="/orderdetail/:id"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <OrderDetails />
               </Layout>
             </AuthUser>
           }
