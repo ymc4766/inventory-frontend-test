@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useGetOrderDetailsQuery } from "../../redux/orderSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useGetOrderDetailsQuery,
+  useUpdateOrderStockMutation,
+} from "../../redux/orderSlice";
+import { toast } from "react-toastify";
 
 const OrderDetails = () => {
   const { id: orderId } = useParams();
@@ -11,6 +15,20 @@ const OrderDetails = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
   const { data, refetch, isLoading, error } = useGetOrderDetailsQuery(orderId);
+  const { updateOrderStock } = useUpdateOrderStockMutation();
+
+  const navigate = useNavigate();
+
+  const deliverHandler = async () => {
+    try {
+      await updateOrderStock(orderId);
+      toast.success("Order Succesfully Delivered ...");
+      navigate("/LPO-factory");
+      refetch();
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
 
   useEffect(() => {
     // When the order data is available, update the state
@@ -60,11 +78,11 @@ const OrderDetails = () => {
 
                 <p>
                   <span className="font-bold">Approved By:</span>{" "}
-                  {order?.approvedData && order?.approvedData.approvedBy}
+                  {order?.approvedData && order?.approvedData?.approvedBy}
                 </p>
                 <p>
                   <span className="font-bold">Comment:</span>{" "}
-                  {order?.approvedData && order?.approvedData.comment}
+                  {order?.approvedData && order?.approvedData?.comment}
                 </p>
               </div>
             </div>
@@ -107,7 +125,7 @@ const OrderDetails = () => {
                 <div className="mt-4 flex justify-end mr-6">
                   <div className="">
                     <button
-                      //   onClick={deliverHandler}
+                      onClick={deliverHandler}
                       className="btn btn-primary mt-4 px-6 bg-green-600 text-gray-100 p-2 rounded-xl"
                     >
                       DELIVER FACTORY ORDER

@@ -68,7 +68,7 @@ const MyOrders = () => {
                     </td>
                     <td>
                       <button className="px-3 bg-orange-400 text-slate-100 rounded-lg py-2">
-                        <Link to={`/orderdetail/${order?._id}`}>View</Link>
+                        <Link to={`/orderdetail/${order._id}`}>View</Link>
                       </button>
                     </td>
                   </tr>

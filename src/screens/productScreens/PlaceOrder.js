@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
 import { clearCartItems } from "../../redux/cartSlice";
+import { getProducts } from "../../redux/productSlice";
 
 const PlaceOrder = () => {
   const { cartItems, approvedData, requisitionSteps } = useSelector(
@@ -33,21 +34,45 @@ const PlaceOrder = () => {
 
   const placeOrderHandler = async () => {
     try {
-      const orderData = {
-        orderItems: cartItems?.map((item) => ({
-          product: item._id, // Ensure product ID is included
-          name: item.name,
-          qty: item.qty,
-          category: item.category,
-          stock: item.stock,
-          supplier: item.supplier,
-        })),
-        approvedData,
-        requisitionSteps,
+      // const orderData = {
+      //   orderItems: cartItems?.map((item) => ({
+      //     product: item._id, // Ensure product ID is included
+      //     name: item.name,
+      //     qty: item.qty,
+      //     category: item.category,
+      //     stock: item.stock,
+      //     supplier: item.supplier,
+      //   })),
+      //   approvedData,
+      //   requisitionSteps,
+      // };\
+      const payload = {
+        orderItems: await Promise.all(
+          cartItems.map(async (item) => {
+            if (!item.supplier) {
+              const product = await getProducts(item._id);
+              item = { ...item, supplier: product.supplier };
+            }
+
+            return {
+              product: item._id,
+              name: item.name,
+              qty: item.qty,
+              category: item.category,
+              price: item.price,
+              description: item.description,
+              stock: item.stock,
+              supplier: item.supplier,
+              user: item.user,
+            };
+          })
+        ),
+        approvedData: approvedData,
+        requisitionSteps: requisitionSteps,
       };
-      await createOrder(orderData).unwrap();
-      const { res } = await createOrder(orderData).unwrap();
-      console.log("res", res);
+      // await createOrder(orderData).unwrap();
+      const { res } = await createOrder(payload).unwrap();
+      // console.log("res", res);
       dispatch(clearCartItems());
     } catch (err) {
       console.error("Failed to place order: ", err);

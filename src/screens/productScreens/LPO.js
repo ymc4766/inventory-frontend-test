@@ -85,7 +85,7 @@ const LPO = () => {
                           )}
                         </td>
                         <td className="px-6 py-3">
-                          <Link to={`/order/${order._id}`}>
+                          <Link to={`/orderdetail/${order._id}`}>
                             <button className="font-medium text-white hover:underline uppercase">
                               Details
                             </button>
