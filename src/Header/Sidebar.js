@@ -130,7 +130,7 @@ const Sidebar = ({ openSidebarToggle, openSidebar }) => {
           {isProcurmentOpen && (
             <ul className="ml-8 space-y-3 mt-2">
               <li className="">
-                <Link to="/LPO">Local purchase orders</Link>
+                <Link to="/LPO-procurement">Local purchase orders</Link>
               </li>
 
               <li className="">

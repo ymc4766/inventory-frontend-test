@@ -17,6 +17,8 @@ import OrderDetails from "./screens/productScreens/OrderDetails";
 import ConfirmRequisition from "./screens/productScreens/ConfirmRequisition";
 import LPO from "./screens/productScreens/LPO";
 import GRN from "./screens/productScreens/GRN";
+import LocalPurchaseOrders from "./screens/procurementScreens/LocalPurchaseOrders";
+import PendingRequsitions from "./screens/procurementScreens/PendingRequisitions";
 
 function App() {
   return (
@@ -152,6 +154,30 @@ function App() {
             <AuthUser>
               <Layout>
                 <LPO />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/LPO-procurement"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <LocalPurchaseOrders />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/pending-requisitions"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <PendingRequsitions />
               </Layout>
             </AuthUser>
           }

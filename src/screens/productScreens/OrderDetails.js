@@ -1,42 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import {
   useGetOrderDetailsQuery,
-  useUpdateOrderStockMutation,
+  useDeliverOrderMutation,
 } from "../../redux/orderSlice";
-import { toast } from "react-toastify";
+import Loader from "../../components/Loader";
 
 const OrderDetails = () => {
   const { id: orderId } = useParams();
-  const [order, setOrder] = useState(null); // State to store the order data
+  const [order, setOrder] = useState(null);
 
-  const dispatch = useDispatch();
+  const { data, isLoading, error } = useGetOrderDetailsQuery(orderId);
 
-  const { userInfo } = useSelector((state) => state.auth);
-  const { data, refetch, isLoading, error } = useGetOrderDetailsQuery(orderId);
-  const { updateOrderStock } = useUpdateOrderStockMutation();
-
+  const [deliverOrder, { isLoading: deliverLoading }] =
+    useDeliverOrderMutation();
+  useEffect(() => {
+    if (data) {
+      setOrder(data.order);
+    }
+  }, [data]);
   const navigate = useNavigate();
 
   const deliverHandler = async () => {
     try {
-      await updateOrderStock(orderId);
-      toast.success("Order Succesfully Delivered ...");
+      await deliverOrder(orderId);
+      toast.success("Order Delivered And  Decremented the Stock");
       navigate("/LPO-factory");
-      refetch();
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
 
-  useEffect(() => {
-    // When the order data is available, update the state
-    if (data) {
-      setOrder(data.order);
-    }
-  }, [data]);
-  console.log("orderDet", order);
+  console.log("order", order);
+
   return (
     <div>
       <div>
@@ -60,7 +58,6 @@ const OrderDetails = () => {
                   <span className="font-bold">
                     Payment : {order?.approvedStatusProcur?.paymentMethod}
                   </span>{" "}
-                  {/* {order.isPaid ? `Paid at ${order.paidAt}` : "Not Paid"} */}
                 </p>
                 <p>
                   <span className="font-bold">Delivery Status:</span>{" "}
@@ -78,12 +75,16 @@ const OrderDetails = () => {
 
                 <p>
                   <span className="font-bold">Approved By:</span>{" "}
-                  {order?.approvedData && order?.approvedData?.approvedBy}
+                  {order?.approvedData && order?.approvedData.approvedBy}
                 </p>
                 <p>
                   <span className="font-bold">Comment:</span>{" "}
-                  {order?.approvedData && order?.approvedData?.comment}
+                  {order?.approvedData && order?.approvedData.comment}
                 </p>
+
+                <div>
+                  <h3 className=""> Req TYPE = {order?.requisitionSteps}</h3>
+                </div>
               </div>
             </div>
             <div className="mt-6">
@@ -111,7 +112,7 @@ const OrderDetails = () => {
                       <tr key={item._id}>
                         <td>{item.name}</td>
                         <td>{item.qty}</td>
-                        <td>{item.price}</td>
+                        <td>{item.price ? item.price : "0"}</td>
                         <td>{item.supplier ? order.supplier : "N/A"} </td>
                         <td>Edit</td>
                       </tr>
@@ -120,35 +121,29 @@ const OrderDetails = () => {
                 </table>
               </div>
             </div>
-            {userInfo && !order?.isDelivered && (
-              <div>
-                <div className="mt-4 flex justify-end mr-6">
-                  <div className="">
-                    <button
-                      onClick={deliverHandler}
-                      className="btn btn-primary mt-4 px-6 bg-green-600 text-gray-100 p-2 rounded-xl"
-                    >
-                      DELIVER FACTORY ORDER
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
+          </div>
+        )}
 
-            {userInfo && order?.isDelivered && !order.isRecieved && (
-              <div>
-                <div className="mt-4 flex justify-end mr-6">
-                  <div className="">
-                    <button
-                      //   onClick={receiveHandler}
-                      className="btn btn-primary mt-4 px-6 bg-green-600 text-gray-100 p-2 rounded-xl"
-                    >
-                      RECIEVE ORDER
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
+        {order && !order?.isDelivered && (
+          <div>
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={deliverHandler}
+                className="px-5 p-2 bg-green-600 text-slate-100 rounded-2xl hover:bg-slate-300 hover:text-orange-800"
+              >
+                {deliverLoading ? <Loader /> : " DELIVER ORDER FACTORY"}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {order && order?.isDelivered && !order.isReceived && (
+          <div>
+            <div className="mt-4 flex justify-end">
+              <button className="px-5 p-2 bg-green-600 text-slate-100 rounded-2xl hover:bg-slate-300 hover:text-orange-800">
+                RECEIVE ORDER
+              </button>
+            </div>
           </div>
         )}
       </div>

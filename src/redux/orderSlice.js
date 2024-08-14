@@ -28,9 +28,17 @@ const orderApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
-    updateOrderStock: builder.mutation({
+    deliverOrder: builder.mutation({
       query: (orderId) => ({
         url: `${ORDERS_URL}/${orderId}/updatestock`,
+        method: "PUT",
+      }),
+      keepUnusedDataFor: 5,
+    }),
+
+    deliverOrderProcur: builder.mutation({
+      query: (orderId) => ({
+        url: `${ORDERS_URL}/deliver/procur/${orderId}`,
         method: "PUT",
       }),
       keepUnusedDataFor: 5,
@@ -43,5 +51,6 @@ export const {
   useGetMyOrdersQuery,
   useGetOrdersQuery,
   useGetOrderDetailsQuery,
-  useUpdateOrderStockMutation,
+  useDeliverOrderMutation,
+  useDeliverOrderProcurMutation,
 } = orderApiSlice;
