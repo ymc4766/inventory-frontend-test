@@ -17,7 +17,25 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    listUsers: builder.query({
+      query: () => ({
+        url: `${USERS_URL}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    updateUserClr: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/${data.id}`,
+        method: "puT",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = userApiSlice;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useListUsersQuery,
+  useUpdateUserClrMutation,
+} = userApiSlice;
