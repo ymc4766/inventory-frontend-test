@@ -7,7 +7,13 @@ import {
   BsGrid1X2Fill,
 } from "react-icons/bs";
 import { IoIosArrowUp, IoIosClose } from "react-icons/io";
-import { FaJediOrder, FaToolbox, FaTools } from "react-icons/fa";
+import {
+  FaJediOrder,
+  FaToolbox,
+  FaTools,
+  FaUser,
+  FaUsers,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -107,6 +113,16 @@ const Sidebar = ({ openSidebarToggle, openSidebar }) => {
                 >
                   <FaTools className="mr-2" />
                   GRN
+                </Link>
+              </li>
+
+              <li className="">
+                <Link
+                  to="/listUsers"
+                  className="flex items-center  text-gray-300 hover:text-black hover:underline "
+                >
+                  <FaUsers className="mr-2" />
+                  Users
                 </Link>
               </li>
             </ul>

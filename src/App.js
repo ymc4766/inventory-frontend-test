@@ -19,6 +19,7 @@ import LPO from "./screens/productScreens/LPO";
 import GRN from "./screens/productScreens/GRN";
 import LocalPurchaseOrders from "./screens/procurementScreens/LocalPurchaseOrders";
 import PendingRequsitions from "./screens/procurementScreens/PendingRequisitions";
+import UserList from "./screens/userScreens/ListUsers";
 
 function App() {
   return (
@@ -189,6 +190,18 @@ function App() {
             <AuthUser>
               <Layout>
                 <GRN />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/listUsers"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <UserList />
               </Layout>
             </AuthUser>
           }

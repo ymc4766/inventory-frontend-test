@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useListUsersQuery } from "../redux/userApiSlice";
 import { FaUserEdit } from "react-icons/fa";
+import { useListUsersQuery } from "../../redux/userApiSlice";
 import EditUserClearance from "./EditUserClearance";
 
 const UserList = () => {

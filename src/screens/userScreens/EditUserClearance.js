@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+
+import { toast } from "react-toastify";
 import {
   useListUsersQuery,
   useUpdateUserClrMutation,
-} from "../redux/userApiSlice";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+} from "../../redux/userApiSlice";
 
 const departments = [
   "Company",
@@ -20,13 +20,11 @@ const EditUserClearance = ({ user, onClose }) => {
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
   const [dept, setDept] = useState(user?.dept);
-  //   const [isAdmin, setIsAdmin] = useState(user.isAdmin || false);
+  const [isAdmin, setIsAdmin] = useState(user?.isAdmin || false);
 
   const [updateUserClr, { isLoading, isSuccess, error }] =
     useUpdateUserClrMutation();
   const { refetch } = useListUsersQuery();
-
-  const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -35,17 +33,17 @@ const EditUserClearance = ({ user, onClose }) => {
       name,
       email,
       dept,
-      //   isAdmin,
+      isAdmin,
     });
     onClose();
   };
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Succesfuly Changed User Clr");
+      toast.success("Successfully Changed User Clearance");
     }
     refetch();
-  }, [isSuccess]);
+  }, [isSuccess, refetch]);
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
@@ -83,6 +81,16 @@ const EditUserClearance = ({ user, onClose }) => {
                 </option>
               ))}
             </select>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Admin Status</label>
+            <input
+              type="checkbox"
+              checked={isAdmin}
+              onChange={(e) => setIsAdmin(e.target.checked)}
+              className="mr-2 leading-tight"
+            />
+            <span className="text-sm text-gray-700">Is Admin</span>
           </div>
           <div className="flex justify-end">
             <button
