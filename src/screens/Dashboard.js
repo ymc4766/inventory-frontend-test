@@ -1,24 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../redux/productSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import CategoryModal from "../components/CategoryModal";
+import { getCategories } from "../redux/categorySlice";
 
 const Dashboard = () => {
+  const [categoryModal, setCategoryModal] = useState(false);
   const { products, isSuccess, isLoading, isError, message } = useSelector(
     (state) => state.products
   );
-
+  const { categories } = useSelector((state) => state.category);
   const { userInfo } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const openCategoryHandler = () => {
+    setCategoryModal(true);
+  };
+
+  const closeCategoryModal = () => {
+    setCategoryModal(false);
+  };
 
   useEffect(() => {
     if (!userInfo) {
       navigate("/login");
     }
   }, [userInfo]);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProducts());
@@ -27,8 +37,24 @@ const Dashboard = () => {
     }
   }, [isSuccess]);
 
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
+
   return (
-    <div className="product-list w-full mt-10 px-4">
+    <div className="product-list w-full  px-4">
+      {categoryModal && <CategoryModal onClose={closeCategoryModal} />}
+      <div className="">
+        <div className="py-4">
+          <button
+            className="px-5 bg-orange-600 p-2 rounded-3xl flex flex-col"
+            onClick={openCategoryHandler}
+          >
+            Create Category
+            <span className="m-auto ">{categories?.length}</span>
+          </button>
+        </div>
+      </div>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">List Inventory</h1>
         <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
