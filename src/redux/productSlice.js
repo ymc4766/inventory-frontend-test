@@ -2,7 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PRODUCTS_URL } from "./constants";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { getProductService } from "../reduxServices/productServices";
+import {
+  createProductService,
+  getProductService,
+} from "../reduxServices/productServices";
 
 const initialState = {
   products: [],
@@ -38,6 +41,25 @@ export const getProduct = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       return await getProductService(id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+//create Product
+export const createProduct = createAsyncThunk(
+  "products/create",
+  async (formData, thunkAPI) => {
+    try {
+      return await createProductService(formData);
     } catch (error) {
       const message =
         (error.response &&

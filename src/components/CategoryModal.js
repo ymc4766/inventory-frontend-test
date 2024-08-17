@@ -31,7 +31,7 @@ const CategoryModal = ({ onClose }) => {
         <h2 className="text-2xl font-bold mb-4">Create Category</h2>
         <form onSubmit={submitHandler}>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Name</label>
+            <label className="block text-gray-700 mb-2">Title</label>
             <input
               type="text"
               value={title}

@@ -5,9 +5,12 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import CategoryModal from "../components/CategoryModal";
 import { getCategories } from "../redux/categorySlice";
+import CreateProduct from "./productScreens/CreateProduct";
 
 const Dashboard = () => {
   const [categoryModal, setCategoryModal] = useState(false);
+  const [createProductModal, setCreateProductModal] = useState(false);
+
   const { products, isSuccess, isLoading, isError, message } = useSelector(
     (state) => state.products
   );
@@ -22,6 +25,13 @@ const Dashboard = () => {
 
   const closeCategoryModal = () => {
     setCategoryModal(false);
+  };
+
+  const openCreateProductModal = () => {
+    setCreateProductModal(true);
+  };
+  const closeCreateProductModal = () => {
+    setCreateProductModal(false);
   };
 
   useEffect(() => {
@@ -44,6 +54,9 @@ const Dashboard = () => {
   return (
     <div className="product-list w-full  px-4">
       {categoryModal && <CategoryModal onClose={closeCategoryModal} />}
+      {createProductModal && (
+        <CreateProduct onClose={closeCreateProductModal} />
+      )}
       <div className="">
         <div className="py-4">
           <button
@@ -57,7 +70,10 @@ const Dashboard = () => {
       </div>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">List Inventory</h1>
-        <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+        <button
+          onClick={openCreateProductModal}
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+        >
           Create Asset
         </button>
       </div>
