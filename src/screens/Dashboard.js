@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../redux/productSlice";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CategoryModal from "../components/CategoryModal";
 import { getCategories } from "../redux/categorySlice";
 import CreateProduct from "./productScreens/CreateProduct";
@@ -105,6 +105,11 @@ const Dashboard = () => {
                     </td>
                     <td className="py-2 px-4 border">{product.stock}</td>
                     <td className="py-2 px-4 border">{product.supplier}</td>
+                    <td>
+                      <button>
+                        <Link to={`/edit/${product._id}`}>Edit</Link>
+                      </button>
+                    </td>
                   </tr>
                 ))}
             </tbody>

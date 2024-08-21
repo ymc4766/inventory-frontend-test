@@ -20,6 +20,7 @@ import GRN from "./screens/productScreens/GRN";
 import LocalPurchaseOrders from "./screens/procurementScreens/LocalPurchaseOrders";
 import PendingRequsitions from "./screens/procurementScreens/PendingRequisitions";
 import UserList from "./screens/userScreens/ListUsers";
+import EditProduct from "./screens/productScreens/EditProduct";
 
 function App() {
   return (
@@ -202,6 +203,18 @@ function App() {
             <AuthUser>
               <Layout>
                 <UserList />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/edit/:id"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <EditProduct />
               </Layout>
             </AuthUser>
           }
