@@ -21,6 +21,7 @@ import LocalPurchaseOrders from "./screens/procurementScreens/LocalPurchaseOrder
 import PendingRequsitions from "./screens/procurementScreens/PendingRequisitions";
 import UserList from "./screens/userScreens/ListUsers";
 import EditProduct from "./screens/productScreens/EditProduct";
+import OrderDetailsProcur from "./screens/procurementScreens/OrderDetailProcurement";
 
 function App() {
   return (
@@ -180,6 +181,18 @@ function App() {
             <AuthUser>
               <Layout>
                 <PendingRequsitions />
+              </Layout>
+            </AuthUser>
+          }
+        />
+
+        <Route
+          path="/procurement/order/:id"
+          exact
+          element={
+            <AuthUser>
+              <Layout>
+                <OrderDetailsProcur />
               </Layout>
             </AuthUser>
           }

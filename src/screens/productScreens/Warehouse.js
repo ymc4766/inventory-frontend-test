@@ -47,7 +47,7 @@ const Warehouse = () => {
                     <td className="py-2 px-4 border">{product.name}</td>
                     <td className="py-2 px-4 border">{product.category}</td>
                     <td className="py-2 px-4 border">
-                      ${product.price.toFixed(2)}
+                      ${product?.price ? product?.price?.toFixed(2) : 0}
                     </td>
                     <td className="py-2 px-4 border">{product.stock}</td>
                     <td className="py-2 px-4 border">{product.supplier}</td>
