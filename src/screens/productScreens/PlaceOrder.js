@@ -33,7 +33,9 @@ const PlaceOrder = () => {
   }, [approvedData.reqBy, isSuccess]);
 
   const placeOrderHandler = async () => {
-    try {
+    try { 
+
+      // this Works as Well 
       // const orderData = {
       //   orderItems: cartItems?.map((item) => ({
       //     product: item._id, // Ensure product ID is included
@@ -46,6 +48,8 @@ const PlaceOrder = () => {
       //   approvedData,
       //   requisitionSteps,
       // };\
+
+// as well this Works  but more Secure  
       const payload = {
         orderItems: await Promise.all(
           cartItems.map(async (item) => {
